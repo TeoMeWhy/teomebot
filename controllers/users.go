@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"teomebot/models"
 	"teomebot/services"
@@ -52,4 +53,26 @@ func ExecCreateOrUpdateUser(twitchUser *twitch.User) error {
 	}
 
 	return nil
+}
+
+func RetroController(u twitch.User) string {
+
+	user := &models.TwitchUser{}
+
+	if res := conDB.First(&user, "twitch_id = ?", u.ID); res.Error != nil {
+		return fmt.Sprintf("%s usuário não encontrado. Dê !join para participar.", user.TwitchNick)
+	}
+
+	retro, err := services.GetUserRetro(user.UUID)
+	if err != nil {
+
+		if err.Error() == "user not found" {
+			return fmt.Sprintf("%s usuário não encontrado. Dê !join ou volte amanhã.", user.TwitchNick)
+		}
+
+		log.Println(err)
+		return fmt.Sprintf("%s erro ao obter a sua retro.", user.TwitchNick)
+	}
+
+	return *retro
 }

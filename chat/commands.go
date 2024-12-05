@@ -310,3 +310,8 @@ func Troca(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := controllers.TrocaController(m.User)
 	c.Say(m.Channel, msg)
 }
+
+func Retro(c *twitch.Client, m twitch.PrivateMessage) {
+	msg := controllers.RetroController(m.User)
+	c.Say(m.Channel, msg)
+}
