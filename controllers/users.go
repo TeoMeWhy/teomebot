@@ -74,5 +74,7 @@ func RetroController(u twitch.User) string {
 		return fmt.Sprintf("%s erro ao obter a sua retro.", user.TwitchNick)
 	}
 
-	return *retro
+	txt := fmt.Sprintf("%s %s", u.DisplayName, *retro)
+
+	return txt
 }
