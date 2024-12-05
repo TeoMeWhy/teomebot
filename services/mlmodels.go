@@ -14,6 +14,11 @@ type userProba struct {
 	Proba float64 `json:"prob"`
 }
 
+type userRetro struct {
+	UUID string `json:"uuid"`
+	Msg  string `json:"msg"`
+}
+
 func GetUserChurnProb(userId string) (float64, error) {
 
 	url := "http://models:8080/churn_score/%s"
@@ -43,4 +48,35 @@ func GetUserChurnProb(userId string) (float64, error) {
 	}
 
 	return userproba.Proba, nil
+}
+
+func GetUserRetro(userId string) (*string, error) {
+
+	url := "http://models:8080/retro_2024/%s"
+	url = fmt.Sprintf(url, userId)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode == http.StatusNotFound {
+		return nil, errors.New("user not found")
+	} else if resp.StatusCode != http.StatusOK {
+		log.Println(string(bodyBytes))
+		return nil, errors.New("erro desconhecido")
+	}
+
+	userretro := &userRetro{}
+	if err := json.Unmarshal(bodyBytes, &userretro); err != nil {
+		return nil, err
+	}
+
+	return &userretro.Msg, nil
 }
