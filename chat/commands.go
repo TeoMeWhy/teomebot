@@ -117,12 +117,6 @@ func Cursos(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-// Discord mostra nosso canal no Discord
-func Discord(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Faça parte da nossa comunidade no Discord, acesse aqui: https://discord.gg/4gPSnGV7qV"
-	c.Say(m.Channel, text)
-}
-
 func Git(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Curso de Git e GitHub: https://www.youtube.com/playlist?list=PLvlkVRRKOYFQ3cfYPjLeQ0KvrQ8bG5H11"
 	c.Say(m.Channel, text)

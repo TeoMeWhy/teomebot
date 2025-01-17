@@ -33,7 +33,6 @@ func GetChat(client *twitch.Client, channel string) {
 		"caixa":      Caixa,
 		"coach":      Coach,
 		"cursos":     Cursos,
-		"discord":    Discord,
 		"go":         GoCmd,
 		"git":        Git,
 		"github":     GitHub,
