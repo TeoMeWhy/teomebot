@@ -309,3 +309,8 @@ func Retro(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := controllers.RetroController(m.User)
 	c.Say(m.Channel, msg)
 }
+
+func PPT(c *twitch.Client, m twitch.PrivateMessage) {
+	msg := "Slides Git & GitHub: https://docs.google.com/presentation/d/1a2tlT1-EtM8m_8NPvrU6rGpzFXROl_5e/edit?usp=sharing&ouid=109225010112567180899&rtpof=true&sd=true"
+	c.Say(m.Channel, msg)
+}
