@@ -222,7 +222,7 @@ func SQL(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Sub(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Seja assinante tenha os seguintes benefícios: teomewSword Acesso ao Datalake teomewSword Acesso aos VODs de lives anteriores teomewSword Não recebe ADs durante as transmissões teomewSword Pontos em dobro para sorteios teomewSword"
+	text := "Seja assinante tenha os seguintes benefícios: teomewSword Acesso aos VODs de lives anteriores teomewSword Não recebe ADs durante as transmissões teomewSword Pontos em dobro para sorteios teomewSword"
 	c.Say(m.Channel, text)
 }
 
