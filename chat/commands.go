@@ -112,6 +112,11 @@ func Comandos(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
+func Comunidade(c *twitch.Client, m twitch.PrivateMessage) {
+	text := `Entre para nossa comunidade: comunidade.teomewhy.org`
+	c.Say(m.Channel, text)
+}
+
 func Cursos(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Lista de cursos gravados: https://teomewhy.org/courses"
 	c.Say(m.Channel, text)
@@ -226,11 +231,6 @@ func Sub(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func Telegram(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Participe do nosso Telegram: https://t.me/+02XLOxJXZUAxNTMx"
-	c.Say(m.Channel, text)
-}
-
 // Twitter mostra meu perfil no twitter
 func Twitter(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Me siga no Twitter:  https://twitter.com/TeoCalvo"
@@ -311,6 +311,6 @@ func Retro(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func PPT(c *twitch.Client, m twitch.PrivateMessage) {
-	msg := "Slides Git & GitHub: https://docs.google.com/presentation/d/1a2tlT1-EtM8m_8NPvrU6rGpzFXROl_5e/edit?usp=sharing&ouid=109225010112567180899&rtpof=true&sd=true"
+	msg := "Slides Python: https://docs.google.com/presentation/d/1S_Khc_tTmMemiHO2lYm99x4Bv0XEB5wCFo0u_ppzQ2M/edit?usp=sharing"
 	c.Say(m.Channel, msg)
 }
