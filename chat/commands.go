@@ -118,7 +118,7 @@ func Comunidade(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Cursos(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Lista de cursos gravados: https://teomewhy.org/courses"
+	text := "Plataforma de cursos livres: https://cursos.teomewhy.org"
 	c.Say(m.Channel, text)
 }
 
