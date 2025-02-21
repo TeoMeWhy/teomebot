@@ -59,6 +59,7 @@ func GetChat(client *twitch.Client, channel string) {
 		"sub":        Sub,
 
 		"twitter": Twitter,
+		"x":       Twitter,
 		"youtube": YouTube,
 
 		"pandas":   Pandas,

@@ -233,7 +233,7 @@ func Sub(c *twitch.Client, m twitch.PrivateMessage) {
 
 // Twitter mostra meu perfil no twitter
 func Twitter(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Me siga no Twitter:  https://twitter.com/TeoCalvo"
+	text := "Me siga no Twitter ou X:  https://x.com/teomewhy"
 	c.Say(m.Channel, text)
 }
 
