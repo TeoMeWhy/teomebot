@@ -136,6 +136,7 @@ func TrocaController(u twitch.User) string {
 
 	streamReq := &streamelements.AddPointsRequest{UserName: u.Name, Amount: 100}
 	if err := clientStreamElements.AddPoints(streamReq); err != nil {
+		log.Println(err)
 		return fmt.Sprintf("%s erro ao atribuir seus datapoints no streamElements", u.DisplayName)
 	}
 
