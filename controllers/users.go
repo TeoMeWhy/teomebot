@@ -37,6 +37,10 @@ func ExecCreateOrUpdateUser(twitchUser *twitch.User) error {
 		}
 	}
 
+	if user.TwitchId == twitchUser.ID && user.TwitchNick == twitchUser.Name {
+		return fmt.Errorf("usuário sem atualização")
+	}
+
 	user.TwitchId = twitchUser.ID
 	user.TwitchNick = twitchUser.Name
 	if err := user.Update(conDB); err != nil {

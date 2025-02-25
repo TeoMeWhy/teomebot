@@ -48,6 +48,20 @@ type Troca struct {
 	Product
 }
 
+type JoinFailed struct {
+	Product
+}
+
+func NewJoinFailed() *JoinFailed {
+	return &JoinFailed{
+		Product: Product{
+			CodProduct:  "41",
+			QtdeProduct: 1,
+			VlProduct:   100,
+		},
+	}
+}
+
 func NewChatMessage() *ChatMessage {
 	return &ChatMessage{
 		Product: Product{
