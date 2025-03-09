@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 	"teomebot/chat"
 	"teomebot/models"
@@ -14,23 +13,18 @@ import (
 
 func main() {
 
-	migration := flag.Bool("migrations", false, "Realizar migrations do banco de dados")
-	flag.Parse()
-
 	godotenv.Load()
 	user := os.Getenv("TWITCH_BOT")
 	oauth := os.Getenv("TWITCH_OAUTH_BOT")
 	channel := os.Getenv("TWITCH_CHANNEL")
 
-	if *migration {
-		con, err := utils.OpenDBConnection()
-		if err != nil {
-			panic("erro na conexão com banco")
-		}
-
-		con.AutoMigrate(&models.PresentUser{}, &models.StreakPresentUser{}, &models.TwitchUser{}, &models.ProfileUser{})
-		return
+	con, err := utils.OpenDBConnection()
+	if err != nil {
+		panic("erro na conexão com banco")
 	}
+
+	con.AutoMigrate(&models.PresentUser{}, &models.StreakPresentUser{}, &models.TwitchUser{}, &models.ProfileUser{})
+	return
 
 	client := twitch.NewClient(user, oauth)
 
