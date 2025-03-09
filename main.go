@@ -24,7 +24,6 @@ func main() {
 	}
 
 	con.AutoMigrate(&models.PresentUser{}, &models.StreakPresentUser{}, &models.TwitchUser{}, &models.ProfileUser{})
-	return
 
 	client := twitch.NewClient(user, oauth)
 
