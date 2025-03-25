@@ -29,11 +29,7 @@ func ExecCreateOrUpdateUser(twitchUser *twitch.User) error {
 				TwitchNick: twitchUser.Name,
 			}
 
-			if err := user.Create(conDB); err != nil {
-				return err
-			}
-
-			return nil
+			return user.Create(conDB)
 		}
 	}
 
@@ -52,11 +48,7 @@ func ExecCreateOrUpdateUser(twitchUser *twitch.User) error {
 		"twitch": user.TwitchId,
 	}
 
-	if err := services.UpdateUser(userMap); err != nil {
-		return err
-	}
-
-	return nil
+	return services.UpdateUser(userMap)
 }
 
 func RetroController(u twitch.User) string {

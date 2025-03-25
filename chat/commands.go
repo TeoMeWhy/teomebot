@@ -272,18 +272,17 @@ func Mega(c *twitch.Client, m twitch.PrivateMessage) {
 func Join(c *twitch.Client, m twitch.PrivateMessage) {
 
 	err := controllers.ExecCreateOrUpdateUser(&m.User)
-	if err.Error() == "usuário sem atualização" {
+	if err != nil {
 
-		txt := "%s você acaba de perder 100 pontos por usar !join indevidamente"
-		c.Say(m.Channel, fmt.Sprintf(txt, m.User.Name))
-		return
-
-	} else if err != nil {
+		if err.Error() == "usuário sem atualização" {
+			txt := "%s você acaba de perder 100 pontos por usar !join indevidamente"
+			c.Say(m.Channel, fmt.Sprintf(txt, m.User.Name))
+			return
+		}
 
 		log.Println(err)
 		c.Say(m.Channel, fmt.Sprintf("%s não foi possível criar seu usuário", m.User.Name))
 		return
-
 	}
 
 	c.Say(m.Channel, fmt.Sprintf("%s usuário criado ou atualizado com sucesso", m.User.Name))
