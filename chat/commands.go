@@ -16,7 +16,7 @@ type HandleCommand func(*twitch.Client, twitch.PrivateMessage)
 
 // Agenda Mostra nossa agenda de cursos futuros
 func Agenda(c *twitch.Client, m twitch.PrivateMessage) {
-	text := `Confira nossa agenda de próximos cursos: https://teomewhy.org/schedule`
+	text := `Confira nossa agenda de próximos cursos: https://cursos.teomewhy.org/material_2025`
 	c.Say(m.Channel, text)
 }
 
