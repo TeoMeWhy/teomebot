@@ -25,6 +25,7 @@ func GetChat(client *twitch.Client, channel string) {
 
 	allFun := map[string]HandleCommand{
 		"agenda":     Agenda,
+		"amazon":     Amazon,
 		"apoio":      Apoio,
 		"asw":        ASW,
 		"asn":        Asn,

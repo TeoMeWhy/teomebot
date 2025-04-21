@@ -20,6 +20,11 @@ func Agenda(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
+func Amazon(c *twitch.Client, m twitch.PrivateMessage) {
+	text := "Confira nossas listas na Amazon: https://www.amazon.com.br/shop/teo.calvo?ref_=cm_sw_r_cp_ud_aipsfshop_AVFKF053S0P67TWZ7XAR"
+	c.Say(m.Channel, text)
+}
+
 // Asn exibe no chat o link de parceira com Adriana Silva
 func Apoio(c *twitch.Client, m twitch.PrivateMessage) {
 	text := `Financie nosso projeto:   Pix.....................pix@teomewhy.org ApoiaSe.............apoia.se/teomewhy LivePix.............livepix.gg/teomewhy`
