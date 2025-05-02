@@ -17,10 +17,17 @@ func ExecCreateOrUpdateUser(twitchUser *twitch.User) error {
 		user, err = models.GetUserByField("twitch_nick", twitchUser.Name, conDB)
 		if err != nil {
 
-			userID, err := services.CreateUser(twitchUser.ID)
+			var userID string
+
+			customer, err := services.GetCustomer(twitchUser.ID)
 			if err != nil {
-				log.Println(err)
-				return err
+				userID, err = services.CreateUser(twitchUser.ID)
+				if err != nil {
+					log.Println(err)
+					return err
+				}
+			} else {
+				userID = customer.UUID
 			}
 
 			user = &models.TwitchUser{
