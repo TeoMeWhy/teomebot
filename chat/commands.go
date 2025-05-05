@@ -323,6 +323,6 @@ func Retro(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func PPT(c *twitch.Client, m twitch.PrivateMessage) {
-	msg := "Slides Pandas: https://docs.google.com/presentation/d/10_lCOieWozst3t2ldGaY78vxh4mOGkplHqXBQ7M3eDo/edit?usp=sharing"
+	msg := "Slides Estatística: https://docs.google.com/presentation/d/1Zfwk5sxpyr98oQlz2GWd_kj8EHuDeRg4tcY7T00Gy3I/edit?usp=sharing"
 	c.Say(m.Channel, msg)
 }
