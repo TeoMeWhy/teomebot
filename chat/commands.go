@@ -163,12 +163,6 @@ func LinuxTips(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func Lista(c *twitch.Client, m twitch.PrivateMessage) {
-	txt := "Me dê um presente de aniversário: https://www.amazon.com.br/hz/wishlist/ls/29OFZD7M8NPRP?ref_=wl_share"
-	c.Say(m.Channel, txt)
-
-}
-
 func Loja(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Acesse nossa lojinha para resgate de prêmios: https://streamelements.com/teomewhy/store"
 	c.Say(m.Channel, text)
@@ -319,6 +313,11 @@ func Troca(c *twitch.Client, m twitch.PrivateMessage) {
 
 func Retro(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := controllers.RetroController(m.User)
+	c.Say(m.Channel, msg)
+}
+
+func Niver(c *twitch.Client, m twitch.PrivateMessage) {
+	msg := "Lista de Presentes: https://www.amazon.com.br/hz/wishlist/ls/29OFZD7M8NPRP?ref_=wl_share"
 	c.Say(m.Channel, msg)
 }
 

@@ -48,7 +48,7 @@ func GetChat(client *twitch.Client, channel string) {
 		"loja":       Loja,
 		"metal":      Metal,
 		"news":       News,
-		"niver":      Lista,
+		"niver":      Niver,
 		"pdi":        PDI,
 		"pix":        Pix,
 		"prime":      Prime,
@@ -113,6 +113,7 @@ func RandomWarnings(client *twitch.Client, channel string) {
 		Prime,
 		Sub,
 		Sub,
+		Niver,
 	}
 
 	client.Join(channel)
