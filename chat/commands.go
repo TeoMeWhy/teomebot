@@ -182,7 +182,7 @@ func News(c *twitch.Client, m twitch.PrivateMessage) {
 
 // PDI mostra o link da planilha de PDI
 func PDI(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Confira nosso vídeo de PDI: https://www.youtube.com/watch?v=vrbU_08NjKg"
+	text := "Confira nosso vídeo de PDI: https://youtu.be/L0G07W5aODM"
 	c.Say(m.Channel, text)
 }
 
