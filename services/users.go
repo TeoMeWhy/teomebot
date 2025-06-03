@@ -100,7 +100,7 @@ func UpdateUser(user map[string]string) error {
 
 func GetCustomer(twitchID string) (*Customer, error) {
 
-	url := "http://points:8081/customers/?id_twitch=%s"
+	url := "http://points:8081/customers/?twitch=%s"
 	url = fmt.Sprintf(url, twitchID)
 
 	resp, err := http.Get(url)
