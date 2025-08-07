@@ -39,7 +39,7 @@ func Asn(c *twitch.Client, m twitch.PrivateMessage) {
 
 // ASW exibe o site do Instituto Aaron Swartz
 func ASW(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Conheça mais sobre o Instituto Aaron Swartz: https://institutoasw.org/"
+	text := "Evento gratuito Aaron Swartz Day: asw.teomewhy.org"
 	c.Say(m.Channel, text)
 }
 
