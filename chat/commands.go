@@ -325,3 +325,9 @@ func PPT(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := "Slides Streamlit: https://docs.google.com/presentation/d/1lo89ViUnysgyNwuzQWl-AGnRaN_UDXWcfgv2GKNnsNQ/edit?usp=sharing"
 	c.Say(m.Channel, msg)
 }
+
+// ----------- //
+func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
+    text := "Estamos desenvolvendo um sistema para o jogo do senhor dos aneis"
+    c.Say(m.Channel, text)
+}
