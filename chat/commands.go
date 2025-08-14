@@ -327,7 +327,7 @@ func PPT(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 // ----------- //
-func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
+func Projeto1(c *twitch.Client, m twitch.PrivateMessage) {
     text := "Estamos desenvolvendo um sistema para o jogo do senhor dos aneis"
     c.Say(m.Channel, text)
 }
