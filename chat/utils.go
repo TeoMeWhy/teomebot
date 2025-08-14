@@ -78,7 +78,7 @@ func GetChat(client *twitch.Client, channel string) {
 
 		"ppt": PPT,
 
-		"projeto": Projeto,
+		"projeto1": Projeto1,
 	}
 
 	client.OnPrivateMessage(func(message twitch.PrivateMessage) {
