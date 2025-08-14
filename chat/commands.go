@@ -127,6 +127,11 @@ func Cursos(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
+func Fidelidade(c *twitch.Client, m twitch.PrivateMessage) {
+	text := "Entenda nosso sistema de pontos: https://teomewhy.org/twitch#sistema-de-pontos"
+	c.Say(m.Channel, text)
+}
+
 func Git(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Curso de Git e GitHub: https://www.youtube.com/playlist?list=PLvlkVRRKOYFQ3cfYPjLeQ0KvrQ8bG5H11"
 	c.Say(m.Channel, text)
@@ -193,13 +198,8 @@ func Pix(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
-	txt := "Conheça nosso projeto de Data Science: github.com/TeoMeWhy/ds-points"
+	txt := "Estamos desenvolvendo um sistema para o jogo do senhor dos aneis"
 	c.Say(m.Channel, txt)
-}
-
-func Fidelidade(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Entenda nosso sistema de pontos: https://teomewhy.org/twitch#sistema-de-pontos"
-	c.Say(m.Channel, text)
 }
 
 // Prime mostra link da amazonPrime e Twitch
@@ -324,10 +324,4 @@ func Niver(c *twitch.Client, m twitch.PrivateMessage) {
 func PPT(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := "Slides Streamlit: https://docs.google.com/presentation/d/1lo89ViUnysgyNwuzQWl-AGnRaN_UDXWcfgv2GKNnsNQ/edit?usp=sharing"
 	c.Say(m.Channel, msg)
-}
-
-// ----------- //
-func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
-    text := "Estamos desenvolvendo um sistema para o jogo do senhor dos aneis"
-    c.Say(m.Channel, text)
 }
