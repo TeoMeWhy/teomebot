@@ -198,7 +198,7 @@ func Pix(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
-	txt := "Estamos desenvolvendo um sistema para o jogo do senhor dos aneis"
+	txt := "Estamos escrevendo um programa em Python para migrar banco de dados"
 	c.Say(m.Channel, txt)
 }
 
