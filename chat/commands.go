@@ -10,7 +10,7 @@ import (
 
 	"github.com/gempir/go-twitch-irc/v4"
 )
-// NetLink envia o link da net com parâmetros de campanha
+// NetLink envia o link da nekt com parâmetros de campanha
 func NetLink(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "https://www.nekt.com/?utm_medium=influencer&utm_source=twitch&utm_campaign=tmw&utm_content=command"
 	c.Say(m.Channel, text)
@@ -118,7 +118,7 @@ func Coach(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Comandos(c *twitch.Client, m twitch.PrivateMessage) {
-	text := `!agenda !apoio !asw !asn !blog !cursos !git !github !linuxtips !loja !metal !pdi !pix !pontos !refs !rock !sql !cubos !join !presente !troca`
+	text := `!agenda !apoio !asw !asn !blog !cursos !git !github !linuxtips !loja !metal !nekt !pdi !pix !pontos !refs !rock !sql !cubos !join !presente !troca`
 	c.Say(m.Channel, text)
 }
 
