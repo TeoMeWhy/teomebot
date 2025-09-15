@@ -71,6 +71,7 @@ func GetChat(client *twitch.Client, channel string) {
 		"vscode":     VSCode,
 		"x":          Twitter,
 		"youtube":    YouTube,
+		"nekt":       Nekt,
 	}
 
 	client.OnPrivateMessage(func(message twitch.PrivateMessage) {
