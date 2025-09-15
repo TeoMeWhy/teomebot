@@ -11,7 +11,7 @@ import (
 	"github.com/gempir/go-twitch-irc/v4"
 )
 // NetLink envia o link da net com parâmetros de campanha
-func NetLink(c *twitch.Client, m twitch.PrivateMessage) {
+func Nekt(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "https://www.nekt.com/?utm_medium=influencer&utm_source=twitch&utm_campaign=tmw&utm_content=command"
 	c.Say(m.Channel, text)
 }
