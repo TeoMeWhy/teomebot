@@ -10,6 +10,7 @@ import (
 
 	"github.com/gempir/go-twitch-irc/v4"
 )
+
 // NetLink envia o link da net com parâmetros de campanha
 func Nekt(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "https://www.nekt.com/?utm_medium=influencer&utm_source=twitch&utm_campaign=tmw&utm_content=command"
@@ -259,9 +260,9 @@ func VSCode(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func Pandas(c *twitch.Client, m twitch.PrivateMessage) {
-	txt := "Repo de pandas https://github.com/TeoMeWhy/desbravando-pandas"
-	c.Say(m.Channel, txt)
+func Repo(c *twitch.Client, m twitch.PrivateMessage) {
+	text := "Repo do Projeto: https://github.com/TeoMeWhy/loyalty-predict"
+	c.Say(m.Channel, text)
 }
 
 // ----------- //
