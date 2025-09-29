@@ -328,6 +328,6 @@ func Niver(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func PPT(c *twitch.Client, m twitch.PrivateMessage) {
-	msg := "Slides SQL: https://docs.google.com/presentation/d/1eDEYXim51tBJcIkkeJ_HZtQO6o45xxEQx0lsmbBcDS0/edit?usp=sharing"
+	msg := "Loyalty Predict: https://docs.google.com/presentation/d/1SOtoM8xstHoDm46fwgfJ7RCGw_yuHQVzahVZjOs3yk4/edit?usp=drive_link"
 	c.Say(m.Channel, msg)
 }
