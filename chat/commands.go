@@ -13,7 +13,7 @@ import (
 
 // NetLink envia o link da net com parâmetros de campanha
 func Nekt(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "https://www.nekt.com/?utm_medium=influencer&utm_source=twitch&utm_campaign=tmw&utm_content=command"
+	text := "Conheça a Nekt: https://nekt.com/?via=33hoqj8m"
 	c.Say(m.Channel, text)
 }
 

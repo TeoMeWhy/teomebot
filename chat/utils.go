@@ -104,13 +104,14 @@ func RandomWarnings(client *twitch.Client, channel string) {
 		Apoio,
 		ASW,
 		Caixa,
-		Comunidade,
+		// Comunidade,
 		News,
 		Pix,
 		Prime,
 		Sub,
 		Sub,
 		Niver,
+		Nekt,
 	}
 
 	client.Join(channel)
