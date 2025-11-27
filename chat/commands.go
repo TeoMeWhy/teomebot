@@ -27,7 +27,7 @@ func Agenda(c *twitch.Client, m twitch.PrivateMessage) {
 }
 
 func Amazon(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Confira nossas listas na Amazon: https://www.amazon.com.br/shop/teo.calvo?ref_=cm_sw_r_cp_ud_aipsfshop_AVFKF053S0P67TWZ7XAR"
+	text := "Aproveite a Black Friday da Amazon: https://amzn.to/49Hh20u"
 	c.Say(m.Channel, text)
 }
 
@@ -45,7 +45,7 @@ func Asn(c *twitch.Client, m twitch.PrivateMessage) {
 
 // ASW exibe o site do Instituto Aaron Swartz
 func ASW(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Evento gratuito Aaron Swartz Day: asw.teomewhy.org"
+	text := "Conheça o Instituto Aaron Swartz: institutoasw.org"
 	c.Say(m.Channel, text)
 }
 
@@ -138,21 +138,9 @@ func Fidelidade(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func Git(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Curso de Git e GitHub: https://www.youtube.com/playlist?list=PLvlkVRRKOYFQ3cfYPjLeQ0KvrQ8bG5H11"
-	c.Say(m.Channel, text)
-
-}
-
 // GitHub exibe nosso perfil no GitHub
 func GitHub(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Se liga no meu GitHub: https://github.com/TeoMeWhy"
-	c.Say(m.Channel, text)
-}
-
-// GoCmd exibe nosso roadmap de GoLang
-func GoCmd(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Nosso roadmap para GoLang: https://teomewhy.github.io/teo-me-to-go"
 	c.Say(m.Channel, text)
 }
 
@@ -203,11 +191,6 @@ func Pix(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
-	txt := "Estamos trabalhando no projeto de RPG"
-	c.Say(m.Channel, txt)
-}
-
 // Prime mostra link da amazonPrime e Twitch
 func Prime(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Vincule seu Amazon Prime com a Twitch e apoie nosso projeto!! https://twitch.amazon.com/tp"
@@ -226,17 +209,6 @@ func Rock(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
-func SQL(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Meu curso de SQL: linuxtips.io/treinamento/descomplicando-o-sql"
-	c.Say(m.Channel, text)
-}
-
-func Sub(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Seja assinante tenha os seguintes benefícios: teomewSword Acesso aos VODs de lives anteriores teomewSword Não recebe ADs durante as transmissões teomewSword Pontos em dobro para sorteios teomewSword"
-	c.Say(m.Channel, text)
-}
-
-// Twitter mostra meu perfil no twitter
 func Twitter(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Me siga no Twitter ou X:  https://x.com/teomewhy"
 	c.Say(m.Channel, text)
@@ -257,11 +229,6 @@ func Anaconda(c *twitch.Client, m twitch.PrivateMessage) {
 
 func VSCode(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Faça o download do Visual Studio Code aqui: https://code.visualstudio.com/download"
-	c.Say(m.Channel, text)
-}
-
-func Repo(c *twitch.Client, m twitch.PrivateMessage) {
-	text := "Repo do Projeto: https://github.com/TeoMeWhy/loyalty-predict"
 	c.Say(m.Channel, text)
 }
 
@@ -319,15 +286,5 @@ func Troca(c *twitch.Client, m twitch.PrivateMessage) {
 
 func Retro(c *twitch.Client, m twitch.PrivateMessage) {
 	msg := controllers.RetroController(m.User)
-	c.Say(m.Channel, msg)
-}
-
-func Niver(c *twitch.Client, m twitch.PrivateMessage) {
-	msg := "Lista de Presentes: https://www.amazon.com.br/hz/wishlist/ls/29OFZD7M8NPRP?ref_=wl_share"
-	c.Say(m.Channel, msg)
-}
-
-func PPT(c *twitch.Client, m twitch.PrivateMessage) {
-	msg := "Loyalty Predict: https://docs.google.com/presentation/d/1SOtoM8xstHoDm46fwgfJ7RCGw_yuHQVzahVZjOs3yk4/edit?usp=drive_link"
 	c.Say(m.Channel, msg)
 }

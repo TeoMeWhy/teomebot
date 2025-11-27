@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"teomebot/models"
 )
 
 type userProba struct {
@@ -15,8 +16,7 @@ type userProba struct {
 }
 
 type userRetro struct {
-	UUID string `json:"uuid"`
-	Msg  string `json:"msg"`
+	Report string `json:"report"`
 }
 
 func GetUserChurnProb(userId string) (float64, error) {
@@ -50,10 +50,9 @@ func GetUserChurnProb(userId string) (float64, error) {
 	return userproba.Proba, nil
 }
 
-func GetUserRetro(userId string) (*string, error) {
+func GetUserRetro(user *models.TwitchUser) (*string, error) {
 
-	url := "http://models:8080/retro_2024/%s"
-	url = fmt.Sprintf(url, userId)
+	url := fmt.Sprintf("http://retro_api/retro?id=%s&name=%s", user.UUID, user.TwitchNick)
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -78,5 +77,5 @@ func GetUserRetro(userId string) (*string, error) {
 		return nil, err
 	}
 
-	return &userretro.Msg, nil
+	return &userretro.Report, nil
 }
