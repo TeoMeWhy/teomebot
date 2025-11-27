@@ -66,7 +66,7 @@ func RetroController(u twitch.User) string {
 		return fmt.Sprintf("%s usuário não encontrado. Dê !join para participar.", user.TwitchNick)
 	}
 
-	retro, err := services.GetUserRetro(user.UUID)
+	retro, err := services.GetUserRetro(user)
 	if err != nil {
 
 		if err.Error() == "user not found" {
@@ -77,7 +77,5 @@ func RetroController(u twitch.User) string {
 		return fmt.Sprintf("%s erro ao obter a sua retro.", user.TwitchNick)
 	}
 
-	txt := fmt.Sprintf("%s %s", u.DisplayName, *retro)
-
-	return txt
+	return *retro
 }
