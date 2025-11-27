@@ -191,6 +191,11 @@ func Pix(c *twitch.Client, m twitch.PrivateMessage) {
 	c.Say(m.Channel, text)
 }
 
+func Projeto(c *twitch.Client, m twitch.PrivateMessage) {
+	txt := "Estamos trabalhando com os dados da Formula 1."
+	c.Say(m.Channel, txt)
+}
+
 // Prime mostra link da amazonPrime e Twitch
 func Prime(c *twitch.Client, m twitch.PrivateMessage) {
 	text := "Vincule seu Amazon Prime com a Twitch e apoie nosso projeto!! https://twitch.amazon.com/tp"
