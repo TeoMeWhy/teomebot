@@ -52,7 +52,7 @@ func GetUserChurnProb(userId string) (float64, error) {
 
 func GetUserRetro(user *models.TwitchUser) (*string, error) {
 
-	url := fmt.Sprintf("retro_api/retro?id=%s&name=%s", user.UUID, user.TwitchNick)
+	url := fmt.Sprintf("http://retro_api:3000/retro?id=%s&name=%s", user.UUID, user.TwitchNick)
 
 	resp, err := http.Get(url)
 	if err != nil {
