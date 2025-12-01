@@ -30,7 +30,6 @@ func TestLoadMessagensEstaticas(t *testing.T) {
 	SetupMessageDB(db)
 
 	repo := NewMessageRepository(db)
-	repo.LoadMessagensEstaticas()
 
 	chaves := map[string]string{
 		"cursos": "Plataforma de cursos livres: https://cursos.teomewhy.org",

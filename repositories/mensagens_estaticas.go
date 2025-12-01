@@ -26,5 +26,7 @@ func (r *MessageRepository) LoadMessagensEstaticas() {
 }
 
 func NewMessageRepository(db *gorm.DB) *MessageRepository {
-	return &MessageRepository{ConDB: db}
+	repo := &MessageRepository{ConDB: db}
+	repo.LoadMessagensEstaticas()
+	return repo
 }
