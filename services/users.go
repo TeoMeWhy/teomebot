@@ -11,17 +11,17 @@ import (
 )
 
 type Customer struct {
-	UUID             string    `json:"uuid" gorm:"primaryKey"`
+	UUID             string    `json:"uuid"`
 	DescCustomerName string    `json:"customer_name"`
-	CodCPF           *string   `json:"cpf" gorm:"unique"`
-	DescEmail        string    `json:"email" gorm:"unique"`
-	IdTwitch         *string   `json:"twitch" gorm:"unique"`
-	IdYouTube        *string   `json:"youtube" gorm:"unique"`
-	IdBlueSky        *string   `json:"bluesky" gorm:"unique"`
-	IdInstagram      *string   `json:"instagram" gorm:"unique"`
+	CodCPF           *string   `json:"cpf"`
+	DescEmail        string    `json:"email"`
+	IdTwitch         *string   `json:"twitch"`
+	IdYouTube        *string   `json:"youtube"`
+	IdBlueSky        *string   `json:"bluesky"`
+	IdInstagram      *string   `json:"instagram"`
 	NrPoints         int64     `json:"points"`
-	CreatedAt        time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt        time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
+	CreatedAt        time.Time `json:"created_at"`
+	UpdatedAt        time.Time `json:"updated_at"`
 }
 
 type CreateUserResp struct {
