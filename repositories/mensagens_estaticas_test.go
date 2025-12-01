@@ -21,7 +21,7 @@ func SetupMessageDB(db *gorm.DB) {
 
 }
 
-func TestLoadMessagens(t *testing.T) {
+func TestLoadMessagensEstaticas(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
 		t.Fatalf("failed to connect database: %v", err)
@@ -30,7 +30,7 @@ func TestLoadMessagens(t *testing.T) {
 	SetupMessageDB(db)
 
 	repo := NewMessageRepository(db)
-	repo.LoadMessagens()
+	repo.LoadMessagensEstaticas()
 
 	chaves := map[string]string{
 		"cursos": "Plataforma de cursos livres: https://cursos.teomewhy.org",

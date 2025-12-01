@@ -13,7 +13,7 @@ type MessageRepository struct {
 	Messagens map[string]Messagem
 }
 
-func (r *MessageRepository) LoadMessagens() {
+func (r *MessageRepository) LoadMessagensEstaticas() {
 
 	var mensagens []Messagem
 	r.ConDB.Find(&mensagens)
