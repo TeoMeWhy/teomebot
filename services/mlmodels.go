@@ -7,16 +7,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"teomebot/models"
 )
 
 type userProba struct {
 	UUID  string  `json:"uuid"`
 	Proba float64 `json:"prob"`
-}
-
-type userRetro struct {
-	Report string `json:"report"`
 }
 
 func GetUserChurnProb(userId string) (float64, error) {
@@ -48,34 +43,4 @@ func GetUserChurnProb(userId string) (float64, error) {
 	}
 
 	return userproba.Proba, nil
-}
-
-func GetUserRetro(user *models.TwitchUser) (*string, error) {
-
-	url := fmt.Sprintf("http://retro_api:3000/retro?id=%s&name=%s?source=twitch", user.UUID, user.TwitchNick)
-
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	bodyBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	if resp.StatusCode == http.StatusNotFound {
-		return nil, errors.New("user not found")
-	} else if resp.StatusCode != http.StatusOK {
-		log.Println(string(bodyBytes))
-		return nil, errors.New("erro desconhecido")
-	}
-
-	userretro := &userRetro{}
-	if err := json.Unmarshal(bodyBytes, &userretro); err != nil {
-		return nil, err
-	}
-
-	return &userretro.Report, nil
 }
