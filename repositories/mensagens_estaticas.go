@@ -1,6 +1,10 @@
 package repositories
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+
+	"gorm.io/gorm"
+)
 
 type Messagem struct {
 	ID       uint   `gorm:"primaryKey"`
@@ -23,6 +27,28 @@ func (r *MessageRepository) LoadMessagensEstaticas() {
 		r.Messagens[msg.Chave] = msg
 	}
 
+}
+
+func (r *MessageRepository) CreateMessagem(chave string, conteudo string) error {
+	msg := &Messagem{Chave: chave, Conteudo: conteudo}
+	if err := r.ConDB.Create(&msg).Error; err != nil {
+		return err
+	}
+	r.Messagens[chave] = *msg
+	return nil
+}
+
+func (r *MessageRepository) UpdateMessagem(chave string, conteudo string) error {
+	msg, exists := r.Messagens[chave]
+	if !exists {
+		return fmt.Errorf("err: {%s} não é uma chave existente", chave)
+	}
+	msg.Conteudo = conteudo
+	if err := r.ConDB.Save(&msg).Error; err != nil {
+		return err
+	}
+	r.Messagens[chave] = msg
+	return nil
 }
 
 func NewMessageRepository(db *gorm.DB) *MessageRepository {

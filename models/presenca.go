@@ -13,6 +13,14 @@ type PresentUser struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 }
 
+type StreakPresentUser struct {
+	UUID      string    `json:"uuid" gorm:"primaryKey"`
+	UserID    string    `json:"user_id"`
+	Qtd       int64     `json:"qtd"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
+}
+
 func PresentExists(userId string) bool {
 	p := &PresentUser{}
 	res := conDB.Where("user_id = ?", userId).Order("created_at desc").First(&p)
@@ -30,14 +38,6 @@ func NewPresentUser(userID string) *PresentUser {
 		UUID:   uuid.New().String(),
 		UserID: userID,
 	}
-}
-
-type StreakPresentUser struct {
-	UUID      string    `json:"uuid" gorm:"primaryKey"`
-	UserID    string    `json:"user_id"`
-	Qtd       int64     `json:"qtd"`
-	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
 }
 
 func NewStreakPresentUser(userID string) *StreakPresentUser {

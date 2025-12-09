@@ -8,13 +8,13 @@ import (
 	"teomebot/config"
 )
 
-type StreamElementsClient struct {
+type StreamElementsRepository struct {
 	URI     string
 	Channel string
 	Token   string
 }
 
-func (c *StreamElementsClient) MakeHeader() http.Header {
+func (c *StreamElementsRepository) MakeHeader() http.Header {
 	header := http.Header{}
 	header.Add("Authorization", fmt.Sprintf("Bearer %s", c.Token))
 	header.Add("Content-Type", "application/json")
@@ -22,7 +22,7 @@ func (c *StreamElementsClient) MakeHeader() http.Header {
 	return header
 }
 
-func (c *StreamElementsClient) AddPoints(username string, amount int64) error {
+func (c *StreamElementsRepository) AddPoints(username string, amount int64) error {
 	url := fmt.Sprintf("%s/points/%s/%s/%d", c.URI, c.Channel, username, amount)
 
 	request, err := http.NewRequest("PUT", url, nil)
@@ -54,8 +54,8 @@ func (c *StreamElementsClient) AddPoints(username string, amount int64) error {
 
 }
 
-func NewStreamElementsClient(settings *config.Config) *StreamElementsClient {
-	return &StreamElementsClient{
+func NewStreamElementsRepository(settings *config.Config) *StreamElementsRepository {
+	return &StreamElementsRepository{
 		URI:     settings.StreamElementsURI,
 		Channel: settings.StreamElementsChannel,
 		Token:   settings.StreamElementsToken,
