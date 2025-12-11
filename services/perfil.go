@@ -84,9 +84,16 @@ func (s *PerfilService) GetUserRetro(twitchUser twitch.User) (string, error) {
 			msg := fmt.Sprintf("%s usuário não encontrado. Dê !join", twitchUser.DisplayName)
 			return msg, err
 		}
+		msg := fmt.Sprintf("%s não foi possível obter sua retro", twitchUser.DisplayName)
+		return msg, err
 	}
 
 	retro, err := s.retroRepository.GetUserRetro(user.UUID, user.TwitchNick)
+	if retro == nil {
+		msg := fmt.Sprintf("%s não foi possível obter sua retro", twitchUser.DisplayName)
+		return msg, err
+	}
+
 	return *retro, err
 
 }
@@ -94,11 +101,13 @@ func (s *PerfilService) GetUserRetro(twitchUser twitch.User) (string, error) {
 func NewPerfilService(settings *config.Config, db *gorm.DB) *PerfilService {
 
 	loyaltyRepository := repositories.NewLoyaltyRepository(settings)
+	retroRepository := repositories.NewRetroRepository(settings)
 	userRepository := repositories.NewUserRepository(db)
 
 	return &PerfilService{
 		loyaltyRepository: loyaltyRepository,
 		userRepository:    userRepository,
+		retroRepository:   retroRepository,
 	}
 
 }

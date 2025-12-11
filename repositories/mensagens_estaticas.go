@@ -7,8 +7,7 @@ import (
 )
 
 type Messagem struct {
-	ID       uint   `gorm:"primaryKey"`
-	Chave    string `gorm:"uniqueIndex"`
+	Chave    string `gorm:"primaryKey"`
 	Conteudo string
 }
 
@@ -49,6 +48,14 @@ func (r *MessageRepository) UpdateMessagem(chave string, conteudo string) error 
 	}
 	r.Messagens[chave] = msg
 	return nil
+}
+
+func (r *MessageRepository) ShowMessage(key string) string {
+	msg, exists := r.Messagens[key]
+	if !exists {
+		return ""
+	}
+	return msg.Conteudo
 }
 
 func NewMessageRepository(db *gorm.DB) *MessageRepository {

@@ -21,6 +21,8 @@ type retroResponse struct {
 
 func (r *RetroRepository) GetUserRetro(uuid, nick string) (*string, error) {
 
+	log.Println("AQUI PRE MERDA:", uuid, nick, r.URI)
+
 	url := fmt.Sprintf("%s/retro?id=%s&name=%s?source=twitch", r.URI, uuid, nick)
 
 	resp, err := http.Get(url)
