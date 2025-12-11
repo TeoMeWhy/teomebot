@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
-	"teomebot/chat"
-	"teomebot/models"
+	"log"
+	"teomebot/config"
+	"teomebot/controllers"
 	"teomebot/utils"
 	"time"
 
@@ -14,21 +14,28 @@ import (
 func main() {
 
 	godotenv.Load()
-	user := os.Getenv("TWITCH_BOT")
-	oauth := os.Getenv("TWITCH_OAUTH_BOT")
-	channel := os.Getenv("TWITCH_CHANNEL")
+	settings, err := config.LoadConfig()
+	if err != nil {
+		log.Println(err)
+		panic("erro ao carregar configuração")
+	}
 
-	con, err := utils.OpenDBConnection()
+	con, err := utils.OpenDBConnection(settings)
 	if err != nil {
 		panic("erro na conexão com banco")
 	}
 
-	con.AutoMigrate(&models.PresentUser{}, &models.StreakPresentUser{}, &models.TwitchUser{}, &models.ProfileUser{})
+	log.Println("Criando cliente da Twitch")
+	client := twitch.NewClient(settings.TwitchBot, settings.TwitchOauthBot)
 
-	client := twitch.NewClient(user, oauth)
+	log.Println("Iniciando o controller")
+	controllerMessages, err := controllers.NewCommandsController(client, con, settings)
+	if err != nil {
+		panic("erro ao iniciar controller de comandos")
+	}
 
-	go chat.GetChat(client, channel)
-	go chat.RandomWarnings(client, channel)
+	log.Println("Capturando comandos")
+	go controllerMessages.HandleCommands()
 
 	for {
 		time.Sleep(time.Hour * 1)

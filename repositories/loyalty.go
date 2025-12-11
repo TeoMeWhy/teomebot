@@ -49,6 +49,34 @@ type LoyaltyRepository struct {
 	HttpClient *http.Client
 }
 
+func (r *LoyaltyRepository) GetCustomer(customerID string) (*Customer, error) {
+
+	url := "%s/customers/%s"
+	url = fmt.Sprintf(url, r.URI, customerID)
+
+	resp, err := r.HttpClient.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("erro na requisição. statuscode: %d", resp.StatusCode)
+	}
+
+	bodyReader, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	customer := &Customer{}
+	if err := json.Unmarshal(bodyReader, &customer); err != nil {
+		return nil, err
+	}
+
+	return customer, nil
+}
+
 func (r *LoyaltyRepository) GetCustomerByTwitch(twitchID string) (*Customer, error) {
 
 	url := "%s/customers/?twitch=%s"
