@@ -92,5 +92,7 @@ func NewCommandsController(twitchclient *twitch.Client, db *gorm.DB, settings *c
 		messageService: *messageService,
 	}
 
+	SetMensagens(db)
+
 	return controller, nil
 }
