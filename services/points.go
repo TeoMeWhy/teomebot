@@ -155,3 +155,39 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 	msg := fmt.Sprintf("%s presença assinada com sucesso!", twitchUser.DisplayName)
 	return msg, nil
 }
+
+func (s *PointsService) CubesToDatapoints(twitchUser twitch.User) (string, error) {
+
+	loyaltyUser, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
+	if err != nil {
+		return "", err
+	}
+
+	qtde := int(loyaltyUser.NrPoints / 1000)
+
+	if qtde >= 1 {
+		products := []models.ProductPoints{}
+		for i := 1; i <= qtde; i++ {
+			products = append(products, models.NewTroca())
+		}
+
+		if err := s.streamElementsRepository.AddPoints(twitchUser.Name, int64(qtde*100)); err != nil {
+			log.Println(err)
+			msg := fmt.Sprintf("%s não foi possível realizar a troca", twitchUser.DisplayName)
+			return msg, err
+		}
+
+		if err := s.loyaltyRepository.AddPoints(loyaltyUser.UUID, products); err != nil {
+			log.Println(err)
+			msg := fmt.Sprintf("%s não foi possível realizar a troca", twitchUser.DisplayName)
+			return msg, err
+		}
+
+		msg := fmt.Sprintf("%s troca realizada com sucesso: %d cubos trocados!", twitchUser.DisplayName, qtde*1000)
+		return msg, nil
+	}
+
+	msg := fmt.Sprintf("%s você não tem cubos suficientes. Junte 1.000 cubos!", twitchUser.DisplayName)
+	return msg, nil
+
+}

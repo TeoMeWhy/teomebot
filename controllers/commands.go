@@ -68,6 +68,9 @@ func (c *CommandsController) GetCommand(message twitch.PrivateMessage) (string, 
 	case "presente":
 		return c.pointsService.MgmtPresenca(message.User)
 
+	case "troca":
+		return c.pointsService.CubesToDatapoints(message.User)
+
 	default:
 		msg := c.messageService.GetMensagem(command)
 		return msg, nil
