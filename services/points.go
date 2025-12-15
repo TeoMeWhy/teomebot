@@ -124,7 +124,7 @@ func (s *PointsService) addStreakCubes(user *repositories.TwitchUser) {
 		return
 	}
 
-}me enterra
+}
 
 func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 
