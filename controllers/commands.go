@@ -20,7 +20,7 @@ type CommandsController struct {
 	messageService services.MessageService
 }
 
-func (c *CommandsController) HandleCommands() {
+func (c *CommandsController) HandleMessages() {
 
 	log.Println("Estou aqui!")
 
@@ -34,6 +34,9 @@ func (c *CommandsController) HandleCommands() {
 			if msg != "" {
 				c.twitchClient.Say(c.twitchChannel, msg)
 			}
+
+		} else {
+			c.pointsService.AddMsgCubes(message.User)
 		}
 
 	})

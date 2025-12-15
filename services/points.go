@@ -37,16 +37,20 @@ func NewPointsService(settings *config.Config, db *gorm.DB) *PointsService {
 
 func (s *PointsService) AddMsgCubes(twitchUser twitch.User) {
 
+	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			log.Println(err)
+		}
+		return
+	}
+
 	product := models.NewChatMessage()
 	products := []models.ProductPoints{product}
 
-	user, err := s.userRepository.GetUserByField("twitch", twitchUser.ID)
-	if err != nil {
-		log.Println(err)
-	}
-
 	if err := s.loyaltyRepository.AddPoints(user.UUID, products); err != nil {
 		log.Println(err)
+		return
 	}
 
 }
@@ -120,7 +124,7 @@ func (s *PointsService) addStreakCubes(user *repositories.TwitchUser) {
 		return
 	}
 
-}
+}me enterra
 
 func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 

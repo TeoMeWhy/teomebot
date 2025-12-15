@@ -28,14 +28,13 @@ func main() {
 	log.Println("Criando cliente da Twitch")
 	client := twitch.NewClient(settings.TwitchBot, settings.TwitchOauthBot)
 
-	log.Println("Iniciando o controller")
-	controllerMessages, err := controllers.NewCommandsController(client, con, settings)
+	log.Println("Iniciando o controller de comandos...")
+	controllerCommands, err := controllers.NewCommandsController(client, con, settings)
 	if err != nil {
 		panic("erro ao iniciar controller de comandos")
 	}
-
 	log.Println("Capturando comandos")
-	go controllerMessages.HandleCommands()
+	go controllerCommands.HandleMessages()
 
 	for {
 		time.Sleep(time.Hour * 1)
