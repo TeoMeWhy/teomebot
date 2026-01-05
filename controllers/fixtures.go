@@ -82,7 +82,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "loja",
-		Conteudo: "Acesse nossa lojinha para resgate de prêmios: https://streamelements.com/teomewhy/store",
+		Conteudo: "Loja na Shopee: https://shopee.com.br/ferhsilvestre Resgate seu cupom aqui: https://streamelements.com/teomewhy/store",
 	},
 
 	{
