@@ -21,11 +21,16 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 	_, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			uuid, err := s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
+
+			customerPoints, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
+			uuid := customerPoints.UUID
 			if err != nil {
-				log.Println(err)
-				msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
-				return msg, err
+				uuid, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
+				if err != nil {
+					log.Println(err)
+					msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
+					return msg, err
+				}
 			}
 
 			newTwitchUser := &repositories.TwitchUser{
