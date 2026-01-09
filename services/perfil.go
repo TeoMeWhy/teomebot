@@ -22,8 +22,9 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 
+			var uuid string
+
 			customerPoints, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
-			uuid := customerPoints.UUID
 			if err != nil {
 				uuid, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
 				if err != nil {
@@ -31,6 +32,10 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 					msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
 					return msg, err
 				}
+			}
+
+			if uuid == "" {
+				uuid = customerPoints.UUID
 			}
 
 			newTwitchUser := &repositories.TwitchUser{
