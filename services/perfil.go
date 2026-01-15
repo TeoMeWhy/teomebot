@@ -51,7 +51,7 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 				return msg, err
 			}
 
-			msg := fmt.Sprintf("%s usuário criado com sucesso", twitchUser.DisplayName)
+			msg := fmt.Sprintf("%s usuário criado com sucesso. Aproveite para conhecer nossas trilhas de conhecimento: cursos.teomewhy.org", twitchUser.DisplayName)
 			return msg, nil
 		}
 
