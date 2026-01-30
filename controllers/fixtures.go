@@ -144,6 +144,11 @@ var mensagens = []repositories.Messagem{
 		Chave:    "vscode",
 		Conteudo: "Faça o download do Visual Studio Code aqui: https://code.visualstudio.com/download",
 	},
+
+	{
+		Chave:    "workshop",
+		Conteudo: "Não perca o workshop da Nekt! https://materiais.nekt.com/workshop-pyspark-02-26?utm_medium=influencer&utm_source=twitch&utm_campaign=tmw&utm_content=live_pyspark",
+	},
 }
 
 func SetMensagens(db *gorm.DB) {
