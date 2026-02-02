@@ -67,7 +67,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "hoje",
-		Conteudo: "Estamos construindo uma plataforma de para o canal!",
+		Conteudo: "Estamos construindo uma plataforma de Machine Learning para o canal!",
 	},
 
 	{
@@ -112,7 +112,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "projeto",
-		Conteudo: "Estamos construindo uma plataforma de para o canal!",
+		Conteudo: "Estamos construindo uma plataforma de Machine Learning para o canal!",
 	},
 
 	{
