@@ -51,6 +51,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "certificado",
+		Conteudo: "Entenda como funciona o nosso certificado: youtube.com/watch?v=VNT2rDdo5LA",
+	},
+
+	{
 		Chave:    "cursos",
 		Conteudo: "Plataforma de cursos livres: https://cursos.teomewhy.org",
 	},
