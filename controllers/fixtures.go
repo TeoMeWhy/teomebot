@@ -72,7 +72,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "hoje",
-		Conteudo: "Estamos construindo uma plataforma de Machine Learning para o canal!",
+		Conteudo: "Projeto de coleta, armazenamento e Machine Learning com dados de F1: github.com/TeoMeWhy/f1-lake",
 	},
 
 	{
@@ -111,13 +111,18 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
-		Chave:    "pix",
+		Chave:    "livepix",
 		Conteudo: "Nos envie uma mensagem pelo livePix: https://livepix.gg/teomewhy",
 	},
 
 	{
+		Chave:    "pix",
+		Conteudo: "Nos envie um pix: pix@teomewhy.org",
+	},
+
+	{
 		Chave:    "projeto",
-		Conteudo: "Estamos construindo uma plataforma de Machine Learning para o canal!",
+		Conteudo: "Projeto de coleta, armazenamento e Machine Learning com dados de F1: github.com/TeoMeWhy/f1-lake",
 	},
 
 	{
