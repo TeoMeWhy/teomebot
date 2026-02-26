@@ -61,6 +61,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "eventos",
+		Conteudo: "Se liga nos eventos que estarei presente em 2026: https://cursos.teomewhy.org/eventos",
+	},
+
+	{
 		Chave:    "fidelidade",
 		Conteudo: "Entenda nosso sistema de pontos: https://teomewhy.org/twitch#sistema-de-pontos",
 	},
