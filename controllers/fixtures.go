@@ -10,7 +10,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "agenda",
-		Conteudo: "Confira nossa agenda de próximos cursos: https://cursos.teomewhy.org/material_2025",
+		Conteudo: "Confira nossa agenda de próximos cursos: https://cursos.teomewhy.org/material_2026",
 	},
 
 	{
