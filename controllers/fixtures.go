@@ -28,7 +28,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "amazon",
-		Conteudo: "Aproveite a Black Friday da Amazon: https://amzn.to/49Hh20u",
+		Conteudo: "Aproveite a Semanada do Consumidor da Amazon: https://amzn.to/40I9JzK",
 	},
 
 	{
