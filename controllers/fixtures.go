@@ -76,11 +76,6 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
-		Chave:    "hoje",
-		Conteudo: "Projeto de coleta, armazenamento e Machine Learning com dados de F1: github.com/TeoMeWhy/f1-lake",
-	},
-
-	{
 		Chave:    "instagram",
 		Conteudo: "Me siga no Instagram: https://www.instagram.com/teomewhy",
 	},
@@ -123,11 +118,6 @@ var mensagens = []repositories.Messagem{
 	{
 		Chave:    "pix",
 		Conteudo: "Nos envie um pix: pix@teomewhy.org",
-	},
-
-	{
-		Chave:    "projeto",
-		Conteudo: "Projeto de coleta, armazenamento e Machine Learning com dados de F1: github.com/TeoMeWhy/f1-lake",
 	},
 
 	{
