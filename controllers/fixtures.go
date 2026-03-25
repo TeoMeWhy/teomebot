@@ -126,6 +126,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "projeto",
+		Conteudo: "Estamos construindo uma IA para o canal: github.com/TeoMeWhy/tmw-ragia",
+	},
+
+	{
 		Chave:    "refs",
 		Conteudo: "Lista completas de referências em Data Science, Programação e Estatística: https://github.com/TeoMeWhy/teomerefs",
 	},
