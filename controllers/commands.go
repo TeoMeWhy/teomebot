@@ -18,6 +18,7 @@ type CommandsController struct {
 	perfilService  services.PerfilService
 	pointsService  services.PointsService
 	messageService services.MessageService
+	iaService      *services.IAService
 }
 
 func (c *CommandsController) HandleMessages() {
@@ -36,7 +37,13 @@ func (c *CommandsController) HandleMessages() {
 			}
 
 		} else {
+
 			c.pointsService.AddMsgCubes(message.User)
+
+			if response, _ := c.iaService.GetAIResponse(message); response != "" {
+				c.twitchClient.Say(c.twitchChannel, response)
+			}
+
 		}
 
 	})
@@ -83,6 +90,7 @@ func NewCommandsController(twitchclient *twitch.Client, db *gorm.DB, settings *c
 	perfilService := services.NewPerfilService(settings, db)
 	pointsService := services.NewPointsService(settings, db)
 	messageService := services.NewMessageService(db)
+	iaService := services.NewIAService(settings)
 
 	controller := &CommandsController{
 		twitchChannel:  settings.TwitchChannel,
@@ -90,6 +98,7 @@ func NewCommandsController(twitchclient *twitch.Client, db *gorm.DB, settings *c
 		perfilService:  *perfilService,
 		pointsService:  *pointsService,
 		messageService: *messageService,
+		iaService:      iaService,
 	}
 
 	SetMensagens(db)
