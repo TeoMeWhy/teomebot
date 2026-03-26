@@ -25,17 +25,12 @@ func NewIAService(cfg *config.Config) *IAService {
 
 func (s *IAService) GetAIResponse(msg twitch.PrivateMessage) (string, error) {
 
-	log.Println("Validando mensagem para a AI:", msg.Message)
-
 	if !strings.ContainsAny(msg.Message, "?") {
 		return "", nil
 	}
 
-	log.Println("Mensagem válida para enviar para AI")
-
 	response, err := s.ragiaClient.GetQueryResponse(msg.Message)
 	if response == "" {
-		log.Println("Erro ou tipo de pergunta fora de contexto", err)
 		return "", err
 	}
 

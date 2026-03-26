@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"teomebot/config"
 )
@@ -41,15 +40,14 @@ func (c *RagiaClient) GetQueryResponse(query string) (string, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return "", errUnexpectedStatusCode
+	}
+
 	var payloadResponse QueryPayloadResponse
 	err = json.NewDecoder(resp.Body).Decode(&payloadResponse)
 	if err != nil {
 		return "", err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		log.Println(payloadResponse.Error, "|", payloadResponse)
-		return "", errUnexpectedStatusCode
 	}
 
 	if payloadResponse.Error != "" {
