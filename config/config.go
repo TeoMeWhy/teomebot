@@ -15,6 +15,8 @@ type Config struct {
 	TwitchOauthBot string `env:"TWITCH_OAUTH_BOT"`
 
 	DsnMysql string `env:"DSN_MYSQL"`
+
+	RagiaURL string `env:"RAGIA_URL" envDefault:"http://localhost:5003/predict"`
 }
 
 func LoadConfig() (*Config, error) {
