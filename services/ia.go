@@ -25,7 +25,7 @@ func NewIAService(cfg *config.Config) *IAService {
 
 func (s *IAService) GetAIResponse(msg twitch.PrivateMessage) (string, error) {
 
-	log.Println("Validando mensagem para a AI")
+	log.Println("Validando mensagem para a AI:", msg.Message)
 
 	if !strings.ContainsAny(msg.Message, "?") {
 		return "", nil

@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"log"
 	"net/http"
 	"teomebot/config"
 	"testing"
@@ -53,6 +54,8 @@ func TestRagiaNoError(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 
 			response, err := client.GetQueryResponse(tt.Query)
+
+			log.Println(response, err)
 
 			assert.NotEqual(t, tt.QueryNotExpected, response)
 			assert.NoError(t, err)
