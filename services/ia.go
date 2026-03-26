@@ -34,7 +34,7 @@ func (s *IAService) GetAIResponse(msg twitch.PrivateMessage) (string, error) {
 	log.Println("Mensagem válida para enviar para AI")
 
 	response, err := s.ragiaClient.GetQueryResponse(msg.Message)
-	if err != nil || response == "" {
+	if response == "" {
 		log.Println("Erro ou tipo de pergunta fora de contexto", err)
 		return "", err
 	}
