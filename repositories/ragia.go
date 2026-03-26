@@ -35,21 +35,26 @@ func (c *RagiaClient) GetQueryResponse(query string) (string, error) {
 
 	bodyRequest := bytes.NewBuffer(payloadRequestBytes)
 
-	resp, err := c.httpClient.Post(c.url, "application/json", bodyRequest)
+	req, err := http.NewRequest("POST", c.url, bodyRequest)
+	if err != nil {
+		return "", err
+	}
+
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		log.Println(resp.StatusCode)
+		return "", errUnexpectedStatusCode
+	}
+
 	var payloadResponse QueryPayloadResponse
 	err = json.NewDecoder(resp.Body).Decode(&payloadResponse)
 	if err != nil {
 		return "", err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		log.Println(payloadResponse.Error, "|", payloadResponse.Response)
-		return "", errUnexpectedStatusCode
 	}
 
 	if payloadResponse.Error != "" {
