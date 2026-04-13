@@ -127,7 +127,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "projeto",
-		Conteudo: "Estamos construindo uma IA para o canal: github.com/TeoMeWhy/tmw-ragia",
+		Conteudo: "Estamos trabalhando com dados de Dota 2: github.com/TeoMeWhy/tmw-dota",
 	},
 
 	{
