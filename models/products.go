@@ -52,6 +52,10 @@ type JoinFailed struct {
 	Product
 }
 
+type Fiel struct {
+	Product
+}
+
 func NewJoinFailed() *JoinFailed {
 	return &JoinFailed{
 		Product: Product{
@@ -129,6 +133,37 @@ func NewChurn(churn float64) *Churn {
 		points = 1
 	}
 	return &Churn{
+		Product: Product{
+			CodProduct:  cod,
+			QtdeProduct: 1,
+			VlProduct:   points,
+		},
+	}
+}
+
+func NewFielScore(score float64) *Fiel {
+
+	var cod string
+	var points int64
+
+	if score < 0.10 {
+		cod = "fiel-score-0.1"
+		points = -10
+	} else if score < 0.25 {
+		cod = "fiel-score-0.25"
+		points = -5
+	} else if score < 0.50 {
+		cod = "fiel-score-0.5"
+		points = -1
+	} else if score < 0.75 {
+		cod = "fiel-score-0.75"
+		points = 50
+	} else {
+		cod = "fiel-score-1.0"
+		points = 100
+	}
+
+	return &Fiel{
 		Product: Product{
 			CodProduct:  cod,
 			QtdeProduct: 1,

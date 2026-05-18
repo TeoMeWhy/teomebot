@@ -136,7 +136,19 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 
 	score *= 100
 
-	msg := fmt.Sprintf("%s seu fiel score é %.2f%%", twitchUser.DisplayName, score)
+	var msg string
+	if score < 0.10 {
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Isso é um tanto quanto vergonhoso! Bora interagir mais.", twitchUser.DisplayName, score)
+	} else if score < 0.25 {
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Dá para melhorar bastante!", twitchUser.DisplayName, score)
+	} else if score < 0.50 {
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Está no caminho certo para começar a ganhar recompensas!", twitchUser.DisplayName, score)
+	} else if score < 0.75 {
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Muito bom! Acabou de ganhar 50 cubos! Continue assim para ganhar recompensas cada vez melhores!", twitchUser.DisplayName, score)
+	} else {
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Parabéns, você é um dos fiéis da comunidade! Exemplo a ser seguido! Acabou de ganhar 100 cubos!", twitchUser.DisplayName, score)
+	}
+
 	return msg, nil
 }
 
