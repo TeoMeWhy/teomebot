@@ -78,6 +78,9 @@ func (c *CommandsController) GetCommand(message twitch.PrivateMessage) (string, 
 	case "troca":
 		return c.pointsService.CubesToDatapoints(message.User)
 
+	case "fiel":
+		return c.perfilService.GetFielScore(message.User)
+
 	default:
 		msg := c.messageService.GetMensagem(command)
 		return msg, nil

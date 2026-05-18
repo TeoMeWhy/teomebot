@@ -5,6 +5,7 @@ import "github.com/caarlos0/env"
 type Config struct {
 	LoyaltyServiceURI string `env:"LOYALTY_SERVICE_URI" envDefault:"http://localhost:8081"`
 	RetroServiceURI   string `env:"RETRO_SERVICE_URI" envDefault:"http://localhost:8082"`
+	PalantirURI       string `env:"PALANTIR_URI" envDefault:"http://localhost:3000/predict"`
 
 	StreamElementsURI     string `env:"STREAMELEMENTS_URI" envDefault:"https://api.streamelements.com/kappa/v2"`
 	StreamElementsChannel string `env:"STREAMELEMENTS_ACCOUNT_ID"`

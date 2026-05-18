@@ -12,4 +12,5 @@ var (
 	ErrRacaNaoEncontrada        = errors.New("raça não encontrada")
 	ErrLootJaResgatado          = errors.New("loot ja foi resgatado hoje")
 	ErrItemNaoEncontrado        = errors.New("item nao encontrado")
+	ErrFielScoreNotFound        = errors.New("fiel score nao encontrado")
 )

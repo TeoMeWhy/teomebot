@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"teomebot/config"
 	"teomebot/errors"
 	"teomebot/repositories"
@@ -12,9 +13,10 @@ import (
 )
 
 type PerfilService struct {
-	loyaltyRepository *repositories.LoyaltyRepository
-	userRepository    *repositories.UserRepository
-	retroRepository   *repositories.RetroRepository
+	loyaltyRepository  *repositories.LoyaltyRepository
+	userRepository     *repositories.UserRepository
+	retroRepository    *repositories.RetroRepository
+	palantirRepository *repositories.PalantirRepository
 }
 
 func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
@@ -108,16 +110,48 @@ func (s *PerfilService) GetUserRetro(twitchUser twitch.User) (string, error) {
 
 }
 
+func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
+
+	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			msg := fmt.Sprintf("%s usuário não encontrado. Dê !join", twitchUser.DisplayName)
+			return msg, err
+		}
+		msg := fmt.Sprintf("%s não foi possível obter seu fiel score", twitchUser.DisplayName)
+		return msg, err
+	}
+
+	predict, err := s.palantirRepository.GetPrediction("tmw_score_fiel", user.UUID)
+	if err != nil {
+		msg := fmt.Sprintf("%s não foi possível obter seu fiel score", twitchUser.DisplayName)
+		return msg, err
+	}
+
+	score, ok := predict["score_fiel"]
+	if !ok {
+		msg := fmt.Sprintf("%s não foi possível obter seu fiel score", twitchUser.DisplayName)
+		return msg, errors.ErrFielScoreNotFound
+	}
+
+	score *= 100
+
+	msg := fmt.Sprintf("%s seu fiel score é %.2f%%", twitchUser.DisplayName, score)
+	return msg, nil
+}
+
 func NewPerfilService(settings *config.Config, db *gorm.DB) *PerfilService {
 
 	loyaltyRepository := repositories.NewLoyaltyRepository(settings)
 	retroRepository := repositories.NewRetroRepository(settings)
+	palantirRepository := repositories.NewPalantirRepository(settings, &http.Client{})
 	userRepository := repositories.NewUserRepository(db)
 
 	return &PerfilService{
-		loyaltyRepository: loyaltyRepository,
-		userRepository:    userRepository,
-		retroRepository:   retroRepository,
+		loyaltyRepository:  loyaltyRepository,
+		userRepository:     userRepository,
+		retroRepository:    retroRepository,
+		palantirRepository: palantirRepository,
 	}
 
 }
