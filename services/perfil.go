@@ -6,7 +6,9 @@ import (
 	"net/http"
 	"teomebot/config"
 	"teomebot/errors"
+	"teomebot/models"
 	"teomebot/repositories"
+	"time"
 
 	"github.com/gempir/go-twitch-irc/v4"
 	"gorm.io/gorm"
@@ -136,6 +138,9 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 
 	score *= 100
 
+	checkFiel, err := s.CheckFielToday(twitchUser)
+	log.Println(err.Error())
+
 	var msg string
 	if score < 10 {
 		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Isso é um tanto quanto vergonhoso! Bora interagir mais.", twitchUser.DisplayName, score)
@@ -144,12 +149,58 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 	} else if score < 50 {
 		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Está no caminho certo para começar a ganhar recompensas!", twitchUser.DisplayName, score)
 	} else if score < 75 {
-		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Muito bom! Acabou de ganhar 50 cubos! Continue assim para ganhar recompensas cada vez melhores!", twitchUser.DisplayName, score)
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Muito bom! Continue assim para ganhar recompensas cada vez melhores!", twitchUser.DisplayName, score)
 	} else {
-		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Parabéns, você é um dos fiéis da comunidade! Exemplo a ser seguido! Acabou de ganhar 100 cubos!", twitchUser.DisplayName, score)
+		msg = fmt.Sprintf("%s seu Fiel-Score: %.2f%%. Parabéns, você é um dos fiéis da comunidade! Exemplo a ser seguido!", twitchUser.DisplayName, score)
 	}
 
+	if checkFiel {
+		return msg, nil
+	}
+
+	prodFiel := models.NewFielScore(score)
+	products := []models.ProductPoints{prodFiel}
+	if err := s.loyaltyRepository.AddPoints(user.UUID, products); err != nil {
+		log.Println(err)
+		msg := fmt.Sprintf("%s não foi possível adicionar seus pontos de fiel", twitchUser.DisplayName)
+		return msg, err
+	}
+
+	var msgPontos string
+	if prodFiel.VlProduct > 0 {
+		msgPontos = fmt.Sprintf(" Você ganhou %d cubos!", prodFiel.VlProduct)
+	} else {
+		msgPontos = fmt.Sprintf(" Você perdeu %d cubos!", -prodFiel.VlProduct)
+	}
+
+	msg += msgPontos
+
 	return msg, nil
+}
+
+func (s *PerfilService) CheckFielToday(twitchUser twitch.User) (bool, error) {
+
+	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return false, err
+		}
+		return false, err
+	}
+
+	lastDate, err := s.loyaltyRepository.GetCustomerLastTransactionDateByCategory(user.UUID, "fiel")
+	if err != nil {
+		return false, err
+	}
+
+	if lastDate == nil {
+		return false, nil
+	}
+
+	today := time.Now().Truncate(24 * time.Hour)
+	lastTransactionDate := lastDate.Truncate(24 * time.Hour)
+
+	return today.Equal(lastTransactionDate), nil
 }
 
 func NewPerfilService(settings *config.Config, db *gorm.DB) *PerfilService {

@@ -146,16 +146,16 @@ func NewFielScore(score float64) *Fiel {
 	var cod string
 	var points int64
 
-	if score < 0.10 {
+	if score < 10 {
 		cod = "fiel-score-0.1"
 		points = -10
-	} else if score < 0.25 {
+	} else if score < 25 {
 		cod = "fiel-score-0.25"
 		points = -5
-	} else if score < 0.50 {
+	} else if score < 50 {
 		cod = "fiel-score-0.5"
 		points = -1
-	} else if score < 0.75 {
+	} else if score < 75 {
 		cod = "fiel-score-0.75"
 		points = 50
 	} else {

@@ -12,6 +12,10 @@ import (
 	"time"
 )
 
+type PayloadLastDate struct {
+	LastTransactionDate *time.Time `json:"last_transaction_date"`
+}
+
 type Product struct {
 	ProductID   string `json:"product_id"`
 	ProductQtde int64  `json:"product_qtd"`
@@ -241,6 +245,34 @@ func (r *LoyaltyRepository) DeleteCustomer(customerID string) error {
 	}
 
 	return nil
+
+}
+
+func (r *LoyaltyRepository) GetCustomerLastTransactionDateByCategory(customerID string, category string) (*time.Time, error) {
+
+	url := fmt.Sprintf("%s/last_transaction_category/%s/%s", r.URI, customerID, category)
+
+	resp, err := r.HttpClient.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("erro na requisição. statuscode: %d", resp.StatusCode)
+	}
+
+	bodyReader, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var payload PayloadLastDate
+	if err := json.Unmarshal(bodyReader, &payload); err != nil {
+		return nil, err
+	}
+
+	return payload.LastTransactionDate, nil
 
 }
 
