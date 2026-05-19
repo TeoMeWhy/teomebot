@@ -139,7 +139,9 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 	score *= 100
 
 	checkFiel, err := s.CheckFielToday(twitchUser)
-	log.Println(err.Error())
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 	var msg string
 	if score < 10 {
