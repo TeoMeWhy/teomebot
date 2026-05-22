@@ -106,6 +106,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "niver",
+		Conteudo: "Minha lista de aniversário! <3 https://www.amazon.com.br/hz/wishlist/ls/29OFZD7M8NPRP?ref_=wl_share",
+	},
+
+	{
 		Chave:    "pdi",
 		Conteudo: "Confira nosso vídeo de PDI: https://youtu.be/L0G07W5aODM",
 	},
