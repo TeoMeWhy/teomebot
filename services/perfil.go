@@ -85,7 +85,7 @@ func (s *PerfilService) GetUserCubes(twitchUser twitch.User) (string, error) {
 		return msg, err
 	}
 
-	if customer.DescCustomerName == "" {
+	if customer.DescCustomerName != twitchUser.DisplayName {
 		customer.DescCustomerName = twitchUser.DisplayName
 		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
 			log.Println(err)
@@ -189,7 +189,7 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 		log.Println(err)
 	}
 
-	if customer.DescCustomerName == "" {
+	if customer.DescCustomerName != twitchUser.DisplayName {
 		customer.DescCustomerName = twitchUser.DisplayName
 		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
 			log.Println(err)

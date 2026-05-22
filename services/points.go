@@ -59,10 +59,10 @@ func (s *PointsService) AddMsgCubes(twitchUser twitch.User) {
 		return
 	}
 
-	if customer.DescCustomerName == "" {
+	if customer.DescCustomerName != user.TwitchNick {
 		customer.DescCustomerName = user.TwitchNick
 		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
-			log.Println(err)
+			log.Println(err, " - ", customer.UUID, " - ", user.TwitchNick)
 		}
 	}
 
@@ -99,7 +99,7 @@ func (s *PointsService) addPresencaCubes(user *repositories.TwitchUser) error {
 		return nil
 	}
 
-	if customer.DescCustomerName == "" {
+	if customer.DescCustomerName != user.TwitchNick {
 		customer.DescCustomerName = user.TwitchNick
 		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
 			log.Println(err)
