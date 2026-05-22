@@ -85,6 +85,13 @@ func (s *PerfilService) GetUserCubes(twitchUser twitch.User) (string, error) {
 		return msg, err
 	}
 
+	if customer.DescCustomerName == "" {
+		customer.DescCustomerName = twitchUser.DisplayName
+		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
+			log.Println(err)
+		}
+	}
+
 	msg := fmt.Sprintf("%s você tem %d cubos", twitchUser.DisplayName, customer.NrPoints)
 	return msg, nil
 
@@ -176,6 +183,18 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 	}
 
 	msg += msgPontos
+
+	customer, err := s.loyaltyRepository.GetCustomer(user.UUID)
+	if err != nil {
+		log.Println(err)
+	}
+
+	if customer.DescCustomerName == "" {
+		customer.DescCustomerName = twitchUser.DisplayName
+		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
+			log.Println(err)
+		}
+	}
 
 	return msg, nil
 }

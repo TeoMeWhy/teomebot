@@ -151,14 +151,14 @@ func (r *LoyaltyRepository) CreateCustomerByTwitch(twitchID string) (string, err
 	return userResp.Customer.UUID, nil
 }
 
-func (r *LoyaltyRepository) UpdateCustomer(customer map[string]string) error {
+func (r *LoyaltyRepository) UpdateCustomer(customer Customer) error {
 
 	bodyUser, err := json.Marshal(customer)
 	if err != nil {
 		return err
 	}
 
-	url := fmt.Sprintf("%s/customers/%s", r.URI, customer["uuid"])
+	url := fmt.Sprintf("%s/customers/%s", r.URI, customer.UUID)
 	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(bodyUser))
 	if err != nil {
 		return err
@@ -172,7 +172,7 @@ func (r *LoyaltyRepository) UpdateCustomer(customer map[string]string) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return errors.New("erro na criação do usuário")
+		return errors.New("erro na atualização do usuário")
 	}
 
 	return nil
