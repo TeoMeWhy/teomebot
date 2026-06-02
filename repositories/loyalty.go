@@ -276,6 +276,34 @@ func (r *LoyaltyRepository) GetCustomerLastTransactionDateByCategory(customerID 
 
 }
 
+func (r *LoyaltyRepository) GetCustomerLastTransactionDateByCodProduct(customerID string, codProduct string) (*time.Time, error) {
+
+	/// last_transaction_product/:customerID/:codProduct
+	url := fmt.Sprintf("%s/last_transaction_product/%s/%s", r.URI, customerID, codProduct)
+
+	resp, err := r.HttpClient.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("erro na requisição. statuscode: %d", resp.StatusCode)
+	}
+
+	bodyReader, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var payload PayloadLastDate
+	if err := json.Unmarshal(bodyReader, &payload); err != nil {
+		return nil, err
+	}
+
+	return payload.LastTransactionDate, nil
+}
+
 func NewLoyaltyRepository(settings *config.Config) *LoyaltyRepository {
 	return &LoyaltyRepository{
 		URI:        settings.LoyaltyServiceURI,

@@ -17,12 +17,11 @@ import (
 type PerfilService struct {
 	loyaltyRepository  *repositories.LoyaltyRepository
 	userRepository     *repositories.UserRepository
-	retroRepository    *repositories.RetroRepository
 	palantirRepository *repositories.PalantirRepository
 }
 
 func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
-	_, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	_, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 
@@ -70,15 +69,7 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 
 func (s *PerfilService) GetUserCubes(twitchUser twitch.User) (string, error) {
 
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			msg := fmt.Sprintf("%s usuário não encontrado. Dê !join", twitchUser.DisplayName)
-			return msg, err
-		}
-	}
-
-	customer, err := s.loyaltyRepository.GetCustomer(user.UUID)
+	customer, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		log.Println(err)
 		msg := fmt.Sprintf("%s não foi possível recuperar seus cubos", twitchUser.DisplayName)
@@ -97,31 +88,9 @@ func (s *PerfilService) GetUserCubes(twitchUser twitch.User) (string, error) {
 
 }
 
-func (s *PerfilService) GetUserRetro(twitchUser twitch.User) (string, error) {
-
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			msg := fmt.Sprintf("%s usuário não encontrado. Dê !join", twitchUser.DisplayName)
-			return msg, err
-		}
-		msg := fmt.Sprintf("%s não foi possível obter sua retro", twitchUser.DisplayName)
-		return msg, err
-	}
-
-	retro, err := s.retroRepository.GetUserRetro(user.UUID, user.TwitchNick)
-	if retro == nil {
-		msg := fmt.Sprintf("%s não foi possível obter sua retro", twitchUser.DisplayName)
-		return msg, err
-	}
-
-	return *retro, err
-
-}
-
 func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	user, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			msg := fmt.Sprintf("%s usuário não encontrado. Dê !join", twitchUser.DisplayName)
@@ -184,7 +153,7 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 
 	msg += msgPontos
 
-	customer, err := s.loyaltyRepository.GetCustomer(user.UUID)
+	customer, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		log.Println(err)
 	}
@@ -201,7 +170,7 @@ func (s *PerfilService) GetFielScore(twitchUser twitch.User) (string, error) {
 
 func (s *PerfilService) CheckFielToday(twitchUser twitch.User) (bool, error) {
 
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	user, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return false, err
@@ -227,14 +196,12 @@ func (s *PerfilService) CheckFielToday(twitchUser twitch.User) (bool, error) {
 func NewPerfilService(settings *config.Config, db *gorm.DB) *PerfilService {
 
 	loyaltyRepository := repositories.NewLoyaltyRepository(settings)
-	retroRepository := repositories.NewRetroRepository(settings)
 	palantirRepository := repositories.NewPalantirRepository(settings, &http.Client{})
 	userRepository := repositories.NewUserRepository(db)
 
 	return &PerfilService{
 		loyaltyRepository:  loyaltyRepository,
 		userRepository:     userRepository,
-		retroRepository:    retroRepository,
 		palantirRepository: palantirRepository,
 	}
 
