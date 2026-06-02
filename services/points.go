@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"teomebot/config"
-	"teomebot/errors"
 	"teomebot/models"
 	"teomebot/repositories"
 	"time"
@@ -37,7 +36,7 @@ func NewPointsService(settings *config.Config, db *gorm.DB) *PointsService {
 
 func (s *PointsService) AddMsgCubes(twitchUser twitch.User) {
 
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	customer, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
 			log.Println(err)
@@ -48,73 +47,37 @@ func (s *PointsService) AddMsgCubes(twitchUser twitch.User) {
 	product := models.NewChatMessage()
 	products := []models.ProductPoints{product}
 
-	if err := s.loyaltyRepository.AddPoints(user.UUID, products); err != nil {
+	if err := s.loyaltyRepository.AddPoints(customer.UUID, products); err != nil {
 		log.Println(err)
 		return
 	}
 
-	customer, err := s.loyaltyRepository.GetCustomerByTwitch(user.TwitchId)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	if customer.DescCustomerName != user.TwitchNick {
-		customer.DescCustomerName = user.TwitchNick
+	if customer.DescCustomerName != twitchUser.DisplayName {
+		customer.DescCustomerName = twitchUser.DisplayName
 		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
-			log.Println(err, " - ", customer.UUID, " - ", user.TwitchNick)
+			log.Println(err, " - ", customer.UUID, " - ", twitchUser.DisplayName)
 		}
 	}
 
 }
 
-func (s *PointsService) addPresencaCubes(user *repositories.TwitchUser) error {
-
-	present, err := s.presentRepository.LoadLastPresent(user)
-	if err != nil && err != gorm.ErrRecordNotFound {
-		log.Println(err)
-		return err
-	}
-
-	if present.CreatedAt.Format("2006-01-02") == time.Now().Format("2006-01-02") {
-		return errors.ErrPresencaAssinadaAnterior
-	}
-
-	newPresent, err := s.presentRepository.CreatePresenca(user)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
+func (s *PointsService) addPresencaCubes(customer *repositories.Customer) error {
 
 	products := []models.ProductPoints{models.NewPresent()}
-	if err := s.loyaltyRepository.AddPoints(user.UUID, products); err != nil {
-		s.presentRepository.DeletePresenca(newPresent)
+	if err := s.loyaltyRepository.AddPoints(customer.UUID, products); err != nil {
 		log.Println(err)
 		return err
-	}
-
-	customer, err := s.loyaltyRepository.GetCustomerByTwitch(user.TwitchId)
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-
-	if customer.DescCustomerName != user.TwitchNick {
-		customer.DescCustomerName = user.TwitchNick
-		if err := s.loyaltyRepository.UpdateCustomer(*customer); err != nil {
-			log.Println(err)
-		}
 	}
 
 	return nil
 }
 
-func (s *PointsService) addStreakCubes(user *repositories.TwitchUser) {
+func (s *PointsService) addStreakCubes(twitchID string) {
 
-	streak, err := s.presentRepository.LoadLastUpdatedStreak(user)
+	streak, err := s.presentRepository.LoadLastUpdatedStreak(twitchID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			if err := s.presentRepository.CreateStreak(user); err != nil {
+			if err := s.presentRepository.CreateStreak(twitchID); err != nil {
 				log.Println(err)
 				return
 			}
@@ -137,7 +100,7 @@ func (s *PointsService) addStreakCubes(user *repositories.TwitchUser) {
 			for i := 0; i < int(streak.Qtd/5); i++ {
 				products = append(products, models.NewStreakPresent())
 			}
-			if err := s.loyaltyRepository.AddPoints(user.UUID, products); err != nil {
+			if err := s.loyaltyRepository.AddPoints(twitchID, products); err != nil {
 				log.Println(err)
 				return
 			}
@@ -145,16 +108,34 @@ func (s *PointsService) addStreakCubes(user *repositories.TwitchUser) {
 		return
 	}
 
-	if err := s.presentRepository.CreateStreak(user); err != nil {
+	if err := s.presentRepository.CreateStreak(twitchID); err != nil {
 		log.Println(err)
 		return
 	}
 
 }
 
+func (s *PointsService) CheckPresentToday(id string) (bool, error) {
+
+	lastDate, err := s.loyaltyRepository.GetCustomerLastTransactionDateByCodProduct(id, "11")
+	if err != nil {
+		return false, err
+	}
+
+	if lastDate == nil {
+		return false, nil
+	}
+
+	today := time.Now().Truncate(24 * time.Hour)
+	lastTransactionDate := lastDate.Truncate(24 * time.Hour)
+
+	return today.Equal(lastTransactionDate), nil
+
+}
+
 func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 
-	user, err := s.userRepository.GetUserByField("twitch_id", twitchUser.ID)
+	customer, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 		log.Println(err)
 		if err == gorm.ErrRecordNotFound {
@@ -165,18 +146,23 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 		return msg, err
 	}
 
-	if err := s.addPresencaCubes(user); err != nil {
+	check, err := s.CheckPresentToday(customer.UUID)
+	if err != nil {
+		log.Println(err)
+		return "", err
+	}
 
-		if err == errors.ErrPresencaAssinadaAnterior {
-			msg := fmt.Sprintf("%s você já assinou presença hoje!", twitchUser.DisplayName)
-			return msg, nil
-		}
+	if check {
+		msg := fmt.Sprintf("%s você já assinou presença hoje!", twitchUser.DisplayName)
+		return msg, nil
+	}
 
+	if err := s.addPresencaCubes(customer); err != nil {
 		msg := fmt.Sprintf("%s não foi possível assinar sua presença", twitchUser.DisplayName)
 		return msg, err
 	}
 
-	s.addStreakCubes(user)
+	s.addStreakCubes(*customer.IdTwitch)
 
 	msg := fmt.Sprintf("%s presença assinada com sucesso!", twitchUser.DisplayName)
 	return msg, nil

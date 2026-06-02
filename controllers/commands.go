@@ -69,9 +69,6 @@ func (c *CommandsController) GetCommand(message twitch.PrivateMessage) (string, 
 	case "cubos":
 		return c.perfilService.GetUserCubes(message.User)
 
-	case "retro":
-		return c.perfilService.GetUserRetro(message.User)
-
 	case "presente":
 		return c.pointsService.MgmtPresenca(message.User)
 
