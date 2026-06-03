@@ -21,34 +21,14 @@ type PerfilService struct {
 }
 
 func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
+
 	_, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
+
 		if err == gorm.ErrRecordNotFound {
 
-			var uuid string
-
-			customerPoints, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
+			_, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
 			if err != nil {
-				uuid, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
-				if err != nil {
-					log.Println(err)
-					msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
-					return msg, err
-				}
-			}
-
-			if uuid == "" {
-				uuid = customerPoints.UUID
-			}
-
-			newTwitchUser := &repositories.TwitchUser{
-				UUID:       uuid,
-				TwitchId:   twitchUser.ID,
-				TwitchNick: twitchUser.DisplayName,
-			}
-
-			if err := s.userRepository.CreateUser(newTwitchUser); err != nil {
-				s.loyaltyRepository.DeleteCustomer(uuid)
 				log.Println(err)
 				msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
 				return msg, err
@@ -56,6 +36,7 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 
 			msg := fmt.Sprintf("%s usuário criado com sucesso. Aproveite para conhecer nossas trilhas de conhecimento: cursos.teomewhy.org", twitchUser.DisplayName)
 			return msg, nil
+
 		}
 
 		log.Println(err)
