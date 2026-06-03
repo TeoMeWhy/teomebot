@@ -61,6 +61,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "discord",
+		Conteudo: "Entre para nossa comunidade no Discord: https://cumbuca.dev/discord",
+	},
+
+	{
 		Chave:    "eventos",
 		Conteudo: "Se liga nos eventos que estarei presente em 2026: https://cursos.teomewhy.org/eventos",
 	},

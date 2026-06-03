@@ -27,7 +27,7 @@ func (c *CommandsController) HandleMessages() {
 
 	c.twitchClient.OnPrivateMessage(func(message twitch.PrivateMessage) {
 
-		if strings.HasPrefix(message.Message, "!") {
+		if strings.HasPrefix(strings.ToLower(message.Message), "!") {
 			msg, err := c.GetCommand(message)
 			if err != nil {
 				log.Println(err)
