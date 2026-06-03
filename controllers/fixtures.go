@@ -132,7 +132,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "projeto",
-		Conteudo: "Estamos trabalhando com dados de Dota 2: github.com/TeoMeWhy/tmw-dota",
+		Conteudo: "Estamos construindo um Data App para Lista de Compras no Mercado!",
 	},
 
 	{

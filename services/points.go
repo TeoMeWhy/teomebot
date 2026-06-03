@@ -148,7 +148,7 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 
 	check, err := s.CheckPresentToday(customer.UUID)
 	if err != nil {
-		log.Println(err)
+		log.Println("Erro ao verificar presença:", err)
 		return "", err
 	}
 
