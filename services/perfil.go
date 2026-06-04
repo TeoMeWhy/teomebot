@@ -25,23 +25,16 @@ func (s *PerfilService) CreateNewUser(twitchUser twitch.User) (string, error) {
 	_, err := s.loyaltyRepository.GetCustomerByTwitch(twitchUser.ID)
 	if err != nil {
 
-		if err == gorm.ErrRecordNotFound {
-
-			_, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
-			if err != nil {
-				log.Println(err)
-				msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
-				return msg, err
-			}
-
-			msg := fmt.Sprintf("%s usuário criado com sucesso. Aproveite para conhecer nossas trilhas de conhecimento: cursos.teomewhy.org", twitchUser.DisplayName)
-			return msg, nil
-
+		_, err = s.loyaltyRepository.CreateCustomerByTwitch(twitchUser.ID)
+		if err != nil {
+			log.Println(err)
+			msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
+			return msg, err
 		}
 
-		log.Println(err)
-		msg := fmt.Sprintf("%s não foi possível criar seu usuário", twitchUser.DisplayName)
-		return msg, err
+		msg := fmt.Sprintf("%s usuário criado com sucesso. Aproveite para conhecer nossas trilhas de conhecimento: cursos.teomewhy.org", twitchUser.DisplayName)
+		return msg, nil
+
 	}
 
 	msg := fmt.Sprintf("%s usuário já existente, pare!", twitchUser.DisplayName)
