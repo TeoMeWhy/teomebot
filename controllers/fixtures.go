@@ -137,7 +137,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "projeto",
-		Conteudo: "Estamos construindo um Data App para Lista de Compras no Mercado!",
+		Conteudo: "Sem projeto ativo no momento. Aproveite para perguntar algo e conheça nossos cursos e projetos: https://cursos.teomewhy.org",
 	},
 
 	{
