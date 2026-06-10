@@ -10,6 +10,8 @@ import (
 	"teomebot/config"
 	"teomebot/models"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type PayloadLastDate struct {
@@ -93,6 +95,11 @@ func (r *LoyaltyRepository) GetCustomerByTwitch(twitchID string) (*Customer, err
 
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
+
+		if resp.StatusCode == http.StatusNotFound {
+			return nil, gorm.ErrRecordNotFound
+		}
+
 		return nil, fmt.Errorf("erro na requisição. statuscode: %d", resp.StatusCode)
 	}
 
