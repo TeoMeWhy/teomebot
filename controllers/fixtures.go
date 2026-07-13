@@ -101,6 +101,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "livros",
+		Conteudo: "Confira minhas sugestões de livros: https://www.amazon.com.br/shop/teo.calvo?ref=ac_inf_tb_vh",
+	},
+
+	{
 		Chave:    "metal",
 		Conteudo: "Playlist Metal: https://open.spotify.com/playlist/2EyQ31SxCDDEdn2sRrMGQX?si=2qJpNrnTRW6dyhmiSLiiTg",
 	},
