@@ -28,7 +28,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "amazon",
-		Conteudo: "Aproveite a Semanada do Consumidor da Amazon: https://amzn.to/40I9JzK",
+		Conteudo: "Confira nossa lista de recomendações: https://www.amazon.com.br/shop/teo.calvo?ref=ac_inf_tb_vh",
 	},
 
 	{
