@@ -102,7 +102,7 @@ var mensagens = []repositories.Messagem{
 
 	{
 		Chave:    "livros",
-		Conteudo: "Confira minhas sugestões de livros: https://www.amazon.com.br/shop/teo.calvo?ref=ac_inf_tb_vh",
+		Conteudo: "Confira minhas sugestões de livros: https://cursos.teomewhy.org/livros",
 	},
 
 	{
