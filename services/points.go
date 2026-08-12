@@ -157,6 +157,10 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 	}
 
 	if check {
+		if err := s.SaveOrCreateUserPresent(customer.UUID); err != nil {
+			log.Println(err)
+			return "", err
+		}
 		msg := fmt.Sprintf("%s você já assinou presença hoje!", twitchUser.DisplayName)
 		return msg, nil
 	}
@@ -167,20 +171,7 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 	}
 
 	s.addStreakCubes(*customer.IdTwitch)
-
-	present := &repositories.PresentUser{}
-	present, err = s.presentRepository.LoadUserPresent(customer.UUID)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			present.UserID = customer.UUID
-		} else {
-			log.Println(err)
-			return "", err
-		}
-	}
-
-	present.Quantity += 1
-	if err := s.presentRepository.SaveUserPresent(present); err != nil {
+	if err := s.SaveOrCreateUserPresent(customer.UUID); err != nil {
 		log.Println(err)
 		return "", err
 	}
@@ -223,4 +214,24 @@ func (s *PointsService) CubesToDatapoints(twitchUser twitch.User) (string, error
 	msg := fmt.Sprintf("%s você não tem cubos suficientes. Junte 1.000 cubos!", twitchUser.DisplayName)
 	return msg, nil
 
+}
+
+func (s *PointsService) SaveOrCreateUserPresent(userID string) error {
+	present := &repositories.PresentUser{}
+	present, err := s.presentRepository.LoadUserPresent(userID)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			present.UserID = userID
+		} else {
+			log.Println(err)
+			return err
+		}
+	}
+
+	present.Quantity += 1
+	if err := s.presentRepository.SaveUserPresent(present); err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
 }
