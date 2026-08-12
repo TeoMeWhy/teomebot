@@ -8,9 +8,10 @@ import (
 )
 
 type PresentUser struct {
-	UUID      string    `json:"uuid" gorm:"primaryKey"`
-	UserID    string    `json:"user_id"`
-	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UserID    string     `json:"user_id" gorm:"primaryKey"`
+	Quantity  int64      `json:"quantity"`
+	CreatedAt *time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt *time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
 }
 
 type StreakPresentUser struct {
@@ -52,4 +53,14 @@ func (r *PresencaRepository) LoadLastUpdatedStreak(twitch_id string) (*StreakPre
 	streak := &StreakPresentUser{}
 	res := r.db.Where("user_id = ?", twitch_id).Order("updated_at DESC").First(&streak)
 	return streak, res.Error
+}
+
+func (r *PresencaRepository) LoadUserPresent(user_id string) (*PresentUser, error) {
+	user := &PresentUser{}
+	res := r.db.Where("user_id = ?", user_id).First(&user)
+	return user, res.Error
+}
+
+func (r *PresencaRepository) SaveUserPresent(p *PresentUser) error {
+	return r.db.Save(&p).Error
 }
