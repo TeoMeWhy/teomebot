@@ -168,16 +168,15 @@ func (s *PointsService) MgmtPresenca(twitchUser twitch.User) (string, error) {
 
 	s.addStreakCubes(*customer.IdTwitch)
 
-	present := &repositories.PresentUser{UserID: customer.UUID}
+	present := &repositories.PresentUser{}
 	present, err = s.presentRepository.LoadUserPresent(customer.UUID)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			present = &repositories.PresentUser{
-				UserID: customer.UUID,
-			}
+			present.UserID = customer.UUID
+		} else {
+			log.Println(err)
+			return "", err
 		}
-		log.Println(err)
-		return "", err
 	}
 
 	present.Quantity += 1
