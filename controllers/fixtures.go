@@ -111,6 +111,11 @@ var mensagens = []repositories.Messagem{
 	},
 
 	{
+		Chave:    "metal-espadinha",
+		Conteudo: "Playlist Metal: https://open.spotify.com/playlist/2EyQ31SxCDDEdn2sRrMGQX?si=2qJpNrnTRW6dyhmiSLiiTg",
+	},
+
+	{
 		Chave:    "news",
 		Conteudo: "Se inscreva na nossa newsletter: https://teomewhy.substack.com",
 	},
