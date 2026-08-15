@@ -101,6 +101,10 @@ func TestGetMessageByCommand(t *testing.T) {
 			"Playlist Metal: https://open.spotify.com/playlist/2EyQ31SxCDDEdn2sRrMGQX?si=2qJpNrnTRW6dyhmiSLiiTg",
 		},
 		{
+			"metal-espadinha",
+			"Playlist Metal: https://open.spotify.com/playlist/2EyQ31SxCDDEdn2sRrMGQX?si=2qJpNrnTRW6dyhmiSLiiTg",
+		},
+		{
 			"news",
 			"Se inscreva na nossa newsletter: https://teomewhy.substack.com",
 		},
